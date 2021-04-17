@@ -182,8 +182,8 @@ const AfficherProduit = async function() {
                 {
                   NomCamera: Camera.name,
                   IdCamera: Camera._id,
-                  Quantite: QuantiteProduitPanierExistante + SelecteurQuantite.value,  /*A modifier, ajouter la quantité saisie dans la page*/
-                  PrixCamera: ((QuantiteProduitPanierExistante + SelecteurQuantite.value) * Camera.price) / 100 ,
+                  Quantite: QuantiteProduitPanierExistante + parseFloat(SelecteurQuantite.value),  /*A modifier, ajouter la quantité saisie dans la page*/
+                  PrixCamera: ((QuantiteProduitPanierExistante + parseFloat(SelecteurQuantite.value)) * Camera.price) / 100 ,
                 };
 
                 /*On envoie le produit dans le tableau qui sera envoyé au LocalStorage*/ 
