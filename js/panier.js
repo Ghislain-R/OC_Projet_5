@@ -9,51 +9,70 @@ const FichePanier = document.getElementById('panier_commande');
 let PanierSectionGlobale = document.createElement('div');
 let PanierSectionProduits = document.createElement('div');
 let PanierSectionFormulaire = document.createElement('div');
+let PanierSectionRetour = document.createElement('div');
 
 /*Création des noeuds entre les élements*/
 FichePanier.appendChild(PanierSectionGlobale);
 PanierSectionGlobale.appendChild(PanierSectionProduits)
+PanierSectionGlobale.appendChild(PanierSectionRetour)
 PanierSectionGlobale.appendChild(PanierSectionFormulaire)
 
+/*Affectation des noms de classes aux élements*/
 PanierSectionGlobale.className = 'section_globale_panier'
 PanierSectionProduits.className = 'section_produits_panier'
+PanierSectionRetour.className = 'section_retour_panier'
 PanierSectionFormulaire.className = 'section_formulaire_panier'
 
-
-
-/***********************************/
-/*Vérification du contenu du panier*/
-/***********************************/
+/*****Vérification du contenu du panier*****/
 
 /*Si le panier est vide*/
 if(ContenuPanier == null || ContenuPanier.length === 0){     
     const PanierVide = document.createElement('p');
     PanierSectionProduits.appendChild(PanierVide);
     PanierVide.className = "panier_vide";
-    PanierVide.textContent = "Votre panier est vide"
+    PanierVide.textContent = "Votre panier est vide..."
 
-} else {
-    /*Si le panier contient des produits, parcours des élements du local storage et affichage des produits*/
+    /*****************Gestion retour boutique panier vide******************/
+    /*Ajout d'un bouton de retour vers la boutique (page index.html)*/
+    let boutonRetourBoutiquePanierVide = document.createElement('button');
+    PanierSectionProduits.appendChild(boutonRetourBoutiquePanierVide);
+    boutonRetourBoutiquePanierVide.className = 'btn_retour_boutique';
+    boutonRetourBoutiquePanierVide.title = 'Retour à la boutique';
+    boutonRetourBoutiquePanierVide.textContent = 'Retour à la boutique';
+    boutonRetourBoutiquePanierVide.type = 'submit';
+
+    /*Au clic sur le bouton de retour boutique, renvoi sur la page de la liste des produits*/
+    boutonRetourBoutiquePanierVide.addEventListener('click' , function (event) { 
+        event.preventDefault();
+        /*Affichage de la page d'accueil*/
+        window.location.href = "index.html";
+    });  
+    /**********************************************************************/
+
+} 
+/*Si le panier contient des produits*/
+else 
+{
+    /*Parcours des élements du local storage et affichage des produits*/
     let i = 0;
     for (Produit of ContenuPanier) {
+
+        /*Création des éléments pour l'affichage des produits*/
         const TableauProduit = document.createElement('div');
         PanierSectionProduits.appendChild(TableauProduit);
         TableauProduit.className = 'tableau_produits_panier';
         
-
         const LigneProduit = document.createElement('div');
         TableauProduit.appendChild(LigneProduit)
         LigneProduit.className = 'ligne_produit_panier'
-
 
         const BlocImage = document.createElement('div')
         LigneProduit.appendChild(BlocImage)
         BlocImage.className = ''
 
-
         /**********Récupération de l'image du produit**************/
         const AfficherProduit = async function() {
-            /*Récupération de l'image de l'appareil photo via son ID*/
+            /*Récupération de l'image de l'appareil photo via son id*/
             try {
                 let response = await fetch('http://localhost:3000/api/cameras/' + Produit.IdCamera);
                 if (response.ok) {
@@ -81,8 +100,7 @@ if(ContenuPanier == null || ContenuPanier.length === 0){
 
         const recapProduit = document.createElement('p');
         LigneProduit.appendChild(recapProduit);
-        //recapProduit.textContent = /*Produit.Quantite + " " + */Produit.NomCamera /*+ " () " + Produit.Lentille;*/
-        recapProduit.textContent = Produit.NomCamera+ " - Qté : " +Produit.Quantite // Produit.Lentille;*/
+        recapProduit.textContent = Produit.NomCamera+ " - Qté : " +Produit.Quantite
         recapProduit.className = 'produit_panier'
 
         const prixProduit = document.createElement('div');
@@ -103,20 +121,66 @@ if(ContenuPanier == null || ContenuPanier.length === 0){
 
         const iconeBoutonSupprimer = document.createElement('i');
         bouttonSuppression.appendChild(iconeBoutonSupprimer);
-        iconeBoutonSupprimer.className = 'fas fa-trash-alt';
+        iconeBoutonSupprimer.className = 'fas fa-trash-alt';     
 
     };
+
+
+    /***************Gestion supression totale du panier***********/
+    /*Ajout d'un bouton de suppression totale du panier*/
+    let boutonSuppressionTotale = document.createElement('button');
+    PanierSectionRetour.appendChild(boutonSuppressionTotale);
+    boutonSuppressionTotale.className = 'btn_supprimer_panier_total';
+    boutonSuppressionTotale.title = 'Vider le panier';
+    boutonSuppressionTotale.textContent = 'Vider le panier';
+    boutonSuppressionTotale.type = 'submit';
+
+    /*Au clic sur le bouton du suppression totale du panier*/
+    boutonSuppressionTotale.addEventListener('click' , function (event) { 
+        event.preventDefault();
+        /*Confirmation de suppression*/
+        if (confirm("Confirmez-vous la suppression totale de votre panier ?")) {
+            /*RAZ du localStorage*/
+            localStorage.clear();
+            /*Rechargement de la page*/
+            document.location.reload();
+        }
+        else
+        {
+            /*L'utilisateur n'a pas confirmé, aucune action*/
+        };
+    });        
+        /*************************************************************/
+
+    /*****************Gestion retour boutique******************/
+    /*Ajout d'un bouton de retour vers la boutique (page index.html)*/
+    let boutonRetourBoutique = document.createElement('button');
+    PanierSectionRetour.appendChild(boutonRetourBoutique);
+    boutonRetourBoutique.className = 'btn_retour_boutique';
+    boutonRetourBoutique.title = 'Retour à la boutique';
+    boutonRetourBoutique.textContent = 'Continuer mes achats';
+    boutonRetourBoutique.type = 'submit';
+
+    /*Au clic sur le bouton de retour à la boutique*/
+    boutonRetourBoutique.addEventListener('click' , function (event) { 
+        event.preventDefault();
+        /*Affichage de la page d'accueil*/
+        window.location.href = "index.html";
+    });
+    /**********************************************************/
+
 } 
 
-/******************************************************/
-/*********Calcul du montant total du panier************/
-/******************************************************/
+
+/*********Calcul du montant total du panier********************/
+/*Parcours du contenu du panier*/
 let calculPrix = []
 for (Produit of ContenuPanier) {
     let article = Produit.PrixCamera;
     calculPrix.push(article);
 };
 
+/*Cumul des montants contenus dans le panier*/
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const PrixTotal = calculPrix.reduce(reducer, 0);
 console.log(PrixTotal);
@@ -131,13 +195,10 @@ sectionTotal.appendChild(total);
 total.className = 'montant_total_panier';
 total.textContent = "Montant total de la commande : " + PrixTotal + " €";
 /**************************************************************/
-/**************************************************************/
-/**************************************************************/
 
 
-/****************************************************************/
-/*******************Formulaire de commande***********************/
-/****************************************************************/
+/*************Gestion du formulaire de commande****************/
+/*Création de l'élément formulaire*/
  const formulaire = document.createElement('form');
  formulaire.className = 'formulaire_contact';
  PanierSectionFormulaire.appendChild(formulaire);
@@ -146,9 +207,7 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  formulaire.appendChild(titreFormulaire);
  formulaire.textContent = "Veuillez compléter le formulaire pour valider votre commande";
 
-
-
- /*******Champ "Nom"********/
+ /*Création du champ "Nom"*/
  const champNom = document.createElement('div');
  formulaire.appendChild(champNom);
  champNom.className = 'div_form';
@@ -166,18 +225,7 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  saisieChampNom.name = "Nom";
  saisieChampNom.required = true;
 
-
- /*Vérification de la validité du nom*/
- /*saisieChampNom.addEventListener("change", function (event) {
-     if (isValid(saisieChampNom.value)) {
-     } else {
-         alert("Aucun chiffre ou symbole n'est autorisé.")
-         event.preventDefault()
-     }
- });*/
-
-
- /*******Champ "Prénom"*******/
+ /*Création du champ "Prénom"*/
  const champPrenom = document.createElement('div');
  formulaire.appendChild(champPrenom);
  champPrenom.className = 'div_form';
@@ -196,7 +244,7 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  saisieChampPrenom.required = true;
 
 
- /*******Champ "Adresse"*******/
+ /*Création du champ "Adresse"*/
  const champAdresse = document.createElement('div');
  formulaire.appendChild(champAdresse);
  champAdresse.className = 'div_form';
@@ -214,7 +262,7 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  saisieChampAdresse.name = "Adresse";
  saisieChampAdresse.required = true;
 
- /*******Champ "Ville"*******/
+ /*Création du champ "Ville"*/
  const champVille = document.createElement('div');
  formulaire.appendChild(champVille);
  champVille.className = 'div_form';
@@ -232,7 +280,7 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  saisieChampVille.name = "Ville";
  saisieChampVille.required = true;
 
- /*******Champ "Email"*******/
+ /*Création du champ "Email"*/
  const champMail = document.createElement('div');
  formulaire.appendChild(champMail);
  champMail.className = 'div_form';
@@ -248,12 +296,9 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  saisieChampMail.setAttribute('class', 'champ_form');
  saisieChampMail.setAttribute('id','email');
  saisieChampMail.name = "Adresse mail";
- /*saisieChampMail.setAttribute('pattern', '[A-z0-9._-]+[@]{1}[A-z0-9._-]+[.]{1}[A-z]{2,10}')*/
  saisieChampMail.required = true;
 
-
-
- /*******Bouton "Validation"*******/
+ /*Création du bouton "Valider la commande"*/
  const champValidation = document.createElement('div');
  formulaire.appendChild(champValidation);
  champValidation.className = 'div_form_bouton';
@@ -265,23 +310,14 @@ total.textContent = "Montant total de la commande : " + PrixTotal + " €";
  boutonValidation.id = 'valid';
  boutonValidation.textContent = "Valider la commande";
  boutonValidation.className = 'btn_valider_panier';
-
-
-
-/**************************************************************/
-/**************************************************************/
 /**************************************************************/
 
-/**************************************************************/
 /*****Envoi du contenu du panier  et du formulaire à l'API*****/
-/**************************************************************/
+/*Au clic sur le bouton "Valider la commande"*/
 boutonValidation.addEventListener("click", function (event) {
 
-    /*Contrôle que tous les champs du formulaire sont bien renseignés*/
+    /*****Contrôle que tous les champs du formulaire sont bien renseignés*****/
     let j = 0
-
-    /*console.log(document.getElementById("nom").length)
-    console.log(document.getElementById("nom").value)*/
 
     /*Recupération des valeurs saisies dans les champs*/
     var nom = document.getElementById("nom").value;
@@ -305,201 +341,179 @@ boutonValidation.addEventListener("click", function (event) {
     var emailse = email.trim(); 
     var tailleemailse = emailse.length;
 
-    /*console.log(nomse);
-    console.log(taillenomse);
-
-    console.log(prenomse);
-    console.log(tailleprenomse);
-
-    console.log(adressese);
-    console.log(tailleadressese);
-
-    console.log(villese);
-    console.log(taillevillese);
-
-    console.log(emailse);
-    console.log(tailleemailse);*/
-
-
+    /*Vérification que les champs ne sont pas vide*/
     if (nomse == "" || taillenomse == '0') {
         j++
-        console.log(j)  
     }
 
     if (prenomse == "" || tailleprenomse == '0') {
         j++
-        console.log(j)
     }
 
     if (adressese == "" || tailleadressese == '0') {
         j++
-        console.log(j)
     }
 
     if (villese == "" || taillevillese == '0') {
         j++
-        console.log(j)
     }
 
     if (emailse == "" || tailleemailse == '0') {
          j++
-         console.log(j)
     }
+    /*****************************************************************/
 
-    /*Si au moins un champ n'est pas renseigné, on affiche un message d'erreur*/
+    /*Si au moins un champ est vide, on affiche un message d'erreur*/
     if (j >= 1) {
         console.log(j+"champs manquants")
         alert("Veuillez renseigner tous les champs du formulaire pour valider la commande")
         return
     }
   
-
-    /*Contrôle du contenu des champs avec les règles*/
-    let regex = /^[A-Z-a-z'éèàçùäëüôûê\s]{2,40}$/
-    /*let regex = /[a-zA-Z][']\$/*/
+    /*****Contrôle de valeurs saisies dans les champs avec les règles*****/
+    /*Contrôle de la règle pour les champs Nom, Prénom et Ville*/
+    let regex = /^[A-Z-a-z'éèàçùäëüôûêîï-\s]{2,40}$/
       
     if(!nomse.match(regex)) {
-        alert("Le nom est Invalide");
+        alert("Le format du nom saisi n'est pas autorisé");
         document.getElementById("nom").focus();
         event.preventDefault()        
         return
     }
 
     if(!prenomse.match(regex)) {
-        alert("Le prénom est Invalide");
+        alert("Le format du prénom saisi n'est pas autorisé");
         document.getElementById("prenom").focus();
         event.preventDefault()
         return
     }
 
     if(!villese.match(regex)) {
-        alert("La ville est Invalide");
-        document.getElementById("adresse").focus();
+        alert("Le format de la ville saisie n'est pas autorisé");
+        document.getElementById("ville").focus();
         event.preventDefault()
         return
     }
 
-    /*let regexmail  = /^[A-z0-9._-]+[@]{1}[A-z0-9._-]+[.]{1}[A-z]{2,10}$/
+    /*Contrôle de la règle pour le champ Email*/
+    let regexmail  = /^[A-z0-9._-]+[@]{1}[A-z0-9._-]+[.]{1}[A-z]{2,10}$/
 
     if(!emailse.match(regexmail)) {
-        alert("Le format de l'adresse mail n'est pas autorisé");
+        alert("Le format de l'adresse mail saisie n'est pas autorisé");
         document.getElementById("email").focus();
         event.preventDefault()
         return
-    }*/
+    }
 
-    let regexadresse = /^[A-Z-a-z-0-9',\s]{5,80}$/
+    /*Contrôle de la règle pour le champ Adresse*/
+    let regexadresse = /^[A-Z-a-z-0-9',éèàçùäëüôûêîï-\s]{5,80}$/
+
     if(!adressese.match(regexadresse)) {
-        alert("Le format de l'adresse postale n'est pas autorisé");
+        alert("Le format de l'adresse postale saisie n'est pas autorisé");
         document.getElementById("adresse").focus();
         event.preventDefault()
         return
     }    
-   
- /****************************************************************************/
+    /****************************************************************************/
 
-/*Envoi du prix total au localStorage*/
-localStorage.setItem('PrixTotalCommande', PrixTotal);
-const storagePrice = localStorage.getItem('PrixTotalCommande');
-console.log(storagePrice);
-             
-
-/*Envoi à l'API */
-/*Tableau et objet demandé par l'API pour la commande*/
-/*Création de l'objet "contact"*/
-let contact = {
-    firstName: saisieChampPrenom.value,
-    lastName: saisieChampNom.value,
-    address: saisieChampAdresse.value,
-    city: saisieChampVille.value,
-    email: saisieChampMail.value,
-}
-console.log(contact);
+    /*Envoi du prix total au localStorage*/
+    localStorage.setItem('PrixTotalCommande', PrixTotal);
+    const storagePrice = localStorage.getItem('PrixTotalCommande');
+    console.log(storagePrice);
+                
+    /*Création de l'objet "contact"*/
+    let contact = {
+        firstName: saisieChampPrenom.value,
+        lastName: saisieChampNom.value,
+        address: saisieChampAdresse.value,
+        city: saisieChampVille.value,
+        email: saisieChampMail.value,
+    }
+    console.log(contact);
 
          
-/*Création du tableau des produits (id des caméras présentes dans le panier)*/
-let products = [];
-for (Produit of ContenuPanier) {
-    let IDProduit = Produit.IdCamera;
-    products.push((IDProduit));
-}
-console.log(products);
-console.log(ContenuPanier);
+    /*Création du tableau des produits (id des caméras présentes dans le panier)*/
+    let products = [];
+    for (Produit of ContenuPanier) {
+        let IDProduit = Produit.IdCamera;
+        products.push((IDProduit));
+    }
+    console.log(products);
+    console.log(ContenuPanier);
 
-/*Création d'un objet regroupant les éléments du formulaire et les produits*/
-let send = {
-            contact,
-            products,
-        }
-        console.log(send);
-        
+    /*Création d'un objet regroupant l'objet contact et le tableau des produits*/
+    let send = {
+                contact,
+                products,
+            }
+            console.log(send);
+            
 
-        /*Envoi des données à l'API*/
-        const post = async function (data){
-            try {
-                let response = await fetch ('http://localhost:3000/api/cameras/order', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',                        
-                    }
+            /*Envoi des données à l'API*/
+            const post = async function (data){
+                try {
+                    /*Execution de la requête GET*/
+                    let response = await fetch ('http://localhost:3000/api/cameras/order', {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json',                        
+                        }
 
-                });
-                if(response.ok) {
-                    let data = await response.json();
-                    console.log(data.orderId);
-                    localStorage.setItem("responseOrder", data.orderId);
-                    window.location = "confirmation.html";
-                    localStorage.removeItem("ArticlePanier");
+                    });
+                    if(response.ok) {
+                        let data = await response.json();
+                        console.log(data.orderId);
+                        localStorage.setItem("responseOrder", data.orderId);
+                        window.location = "confirmation.html";
+                        localStorage.removeItem("ArticlePanier");
 
-                } else {
-                    event.preventDefault();
-                    console.error('Retour du serveur : ', response.status);
-                    alert('Erreur rencontrée : ' + response.status);
+                    } else {
+                        event.preventDefault();
+                        console.error('Retour du serveur : ', response.status);
+                        alert('Erreur rencontrée : ' + response.status);
+                    } 
+                } catch (error) {
+                    alert("Erreur : " + error);
                 } 
-            } catch (error) {
-                alert("Erreur : " + error);
-            } 
-        };
-        post(send);
+            };
+            post(send);
 
 
  
 });
-
-
-/***********************************************************/
-/***********************************************************/
 /***********************************************************/
 
-/***********************************************************/
-/************Suppression d'un article du panier*************/
-/***********************************************************/
+/************Gestion de la suppression d'un article du panier*************/
 /*On récupère l'article associé au bouton poubelle*/
 let bouttonSuppression = document.getElementsByClassName('btn_supprimer_panier');
 for (let i = 0 ; i < bouttonSuppression.length; i++) {
-bouttonSuppression[i].addEventListener('click' , function (event) { 
-event.preventDefault();
-let id = this.closest('.prix_produit_panier').id;
+    
+    /*Au clic sur le bouton de suppression*/
+    bouttonSuppression[i].addEventListener('click' , function (event) { 
 
-/*On supprime l'article du localStorage*/
-ContenuPanier.splice(id, 1);
+        /*Récupération de l'Id sur produit*/
+        event.preventDefault();
+        let id = this.closest('.prix_produit_panier').id;
 
-/*On enregistre le nouveau localStorage*/
-localStorage.setItem('ArticlePanier', JSON.stringify(ContenuPanier));
-JSON.parse(localStorage.getItem('ArticlePanier'));
+        /*On supprime l'article du localStorage*/
+        ContenuPanier.splice(id, 1);
 
-alert('Cet article a bien été supprimé !');
-window.location.href = "panier.html";   
+        /*On enregistre le nouveau localStorage*/
+        localStorage.setItem('ArticlePanier', JSON.stringify(ContenuPanier));
+        JSON.parse(localStorage.getItem('ArticlePanier'));
 
-/*Si après suppression, le contenu du panier est vide, on recharge la page*/
-if (ContenuPanier.length == 0) {
-localStorage.removeItem("ArticlePanier");
-document.location.reload();
-}
+        alert('Cet article a bien été supprimé !');
+        window.location.href = "panier.html";   
 
-}); 
+        /*Si après suppression, le contenu du panier est vide, on recharge la page*/
+        if (ContenuPanier.length == 0) {
+            localStorage.removeItem("ArticlePanier");
+            document.location.reload();
+        }
+
+    }); 
 };
-/**********************************************************/
-/**********************************************************/
-/**********************************************************/
+/************************************************************/
+
+

@@ -1,3 +1,65 @@
+
+/******Zone boutons retour boutique et vider panier********/
+.btn_retour_boutique, .btn_supprimer_panier_total, .btn_valider_panier 
+{    
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn_retour_boutique:hover
+{
+    background-color: green;
+}
+
+.btn_retour_boutique
+{
+    background-color: #4CAF50;
+}
+
+.btn_supprimer_panier_total
+{
+    background-color: rgb(250, 111, 111);
+}
+
+.btn_supprimer_panier_total:hover
+{
+    background-color: rgb(250, 52, 52);
+}
+
+.btn_valider_panier 
+{
+    background-color: black;
+    margin-top: 20px;
+}
+
+.btn_valider_panier:hover
+{
+    background-color:  tomato;
+}
+
+.section_produits_panier
+{
+    text-align: center;
+}
+
+.section_retour_panier
+{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.btn_supprimer_panier:hover
+{
+   background-color:  gainsboro;
+}
+/***************************************************/
 body
 {
     margin: auto;
@@ -12,23 +74,45 @@ header
     align-items: center;
     color:black;
 }
+.navigation
+{
+  display: contents;
+}
+
+.lien_panier , .lien_produits, .lien_produits_panier
+{
+    display: flex;
+    align-items: center;
+    color: rgb(54, 54, 199);
+    font-weight: normal;
+}
+
+.lien_panier
+{
+   margin-right: 5%;
+   margin-left: 20px; 
+}
+
+.lien_produits_panier
+{
+    margin-right: 5%;
+}
 
 #index_panier p
 {
     font-size: medium;
+    height: 8px;
 }
 
-.lien_panier , .lien_produits
+.fa-camera-retro, .fa-shopping-cart 
 {
-    display: flex;
+    margin-right: 5px;
 }
 
 p
 {
     font-size: 80px;
-    /*height: auto;*/
     font-family: "Russo One", sans-serif;
-    /*font-weight: bold;*/
 }
 
 .titre
@@ -54,17 +138,9 @@ h2
     font-family: "Russo One", sans-serif;
     width: 100%;
     text-align: center;
-
-}
-
-.lien_panier
-{
-   /*margin-left: 50%;*/
-   /*align-self: flex-start;*/
-   /*height:100%;*/
-   margin-right: 10%;
-   
-
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: rgb(37, 65, 2);
 }
 
 .logo
@@ -72,9 +148,8 @@ h2
     display: flex;
     font-size:xx-large;
     margin-left: 5%;
-    width: 100%;
+    width: 80%;
     align-items: center;
-    /*background-color: brown;*/
 }
 
 section a img 
@@ -84,13 +159,17 @@ section a img
     height: auto;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    /*box-shadow: 0 0 20px #bababa;*/
     object-fit: cover;
+}
+
+section a img:hover
+{
+    opacity: 0.7;
 }
 
 .camera
 {
-    margin-top: 50px;
+    margin-top: 50px;    
 }
  
  #liste_cameras
@@ -127,22 +206,16 @@ section a img
 }
 
 /***********DETAIL FICHE PRODUIT***********/
-/*#fiche_camera
-{
-    background-color: gainsboro;
-}*/    
-
 .section_globale_produit
 {
-    background-color: grey;
-    border-radius: 10px;
-    margin-left: 20%;
-    margin-right: 20%;
+    background-color: darkseagreen;
+    padding: 20px;
 }
 
 .section_entete_produit
 {
     display: flex;
+    justify-content: center;
 }
 
 .img_produit
@@ -151,6 +224,8 @@ section a img
     width: 500px;
     height: auto;
     object-fit: cover;
+    border: 2px solid white;
+    border-radius: 10px;
 }
 
 .section_detail_produit
@@ -162,8 +237,9 @@ section a img
 .section_description_produit
 {
     margin-top: 50px;
-    margin-left: 10px;
+    text-align: center;
 }
+
 .desc_produit
 {
     font-size: x-large;
@@ -171,32 +247,49 @@ section a img
 
 #ajout_panier
 {
-    background-color: yellow;
-    border-radius: 10px;
-    font-weight: bold;
-    border-style: outset;
-    height: 50px;
-    border-color: none;
-    border-style: none;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    /*margin: 4px 2px;*/
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: black;
 }
 
+#ajout_panier:hover
+{
+    background-color:  tomato;
+}
+
+.section_listes_produit 
+{
+    display: block;
+    text-align: left;
+    width: max-content;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 10px;
+    /*background-color: beige;*/
+    border-radius: 5px;
+    border: 2px solid white;
+}
 /******************************************/
-
 /**************DETAIL PANIER***************/
-
-
 .tableau_produits_panier
 {
     display: flex;
-    background-color: gainsboro;  
+    background-color: darkseagreen;  
     justify-content: space-around;
-    padding-top: 10px;
 }
 
 .ligne_produit_panier{
     display: flex;
     border: 5px solid white;
-    background-color: white;
+    background-color: beige;
     height: max-content;
     width: auto;
     margin-top: 10px;
@@ -206,7 +299,6 @@ section a img
 
 .produit_panier 
 {
-    /*background-color: hotpink;*/
     font-size: large;
     margin-top: auto;
     margin-bottom: auto;
@@ -217,8 +309,6 @@ section a img
 .prix_produit_panier{
     display: flex;
     margin-left: 20px;
-    /*background-color: blue;*/
-    width: 10em;
     vertical-align: middle;
     align-self: center;
     padding-right: 10px;
@@ -227,31 +317,25 @@ section a img
 .prix_produit
 {
     font-size: large;
-    /*background-color: lightseagreen;*/
     margin-top: auto;
     margin-bottom: auto;
-    /*background-color: brown;*/
     color: grey;
     width: inherit;
 }
 
 .btn_supprimer_panier{
     margin-left: 50px;
-    /*background-color: chartreuse;*/
     height: fit-content;
     border-radius: 5px;
 }
 
-.total_panier{
-
-}
 
 .montant_total_panier{
-    
     text-align: center;   
-    font-size: x-large;
-    background-color: burlywood; 
-    height: 50px;   
+    font-size: large;
+    background-color: black; 
+    color: white;
+    vertical-align:middle;
 }
 
 .img_produit_panier{
@@ -259,38 +343,36 @@ section a img
     height: auto;
 }
 
-
 .panier_vide
 {
     font-size: x-large;
-    color: blue;
+    color: black;
     text-align: center;
+    background-color: darkseagreen;
 }
 
-
-.section_formulaire_panier{
-display: flex;
-justify-content: center;
+.section_formulaire_panier
+{
+    display: flex;
+    justify-content: center;
 }
 
-.formulaire_contact {
-
-    background-color: palegoldenrod;
+.formulaire_contact 
+{
+    background-color: beige;
     text-align: center;
-    border: 2px solid grey;
+    border: 1px solid grey;
     padding: 20px;
+    border-radius: 5px;
 }
 
-
-.titre_formulaire {
-
-  font-size: x-large;
-
+.titre_formulaire 
+{
+    font-size: x-large;
 }
 
 .div_form
 {
-    /*background-color: aqua;*/
     text-align: left;
     padding-right: 10px;
     padding-left: 10px;
@@ -298,49 +380,17 @@ justify-content: center;
 
 .champ_form
 {
-    /*background-color: blueviolet;*/
     width: 500px;
     margin-top: 20px;
 }
-/*label
-{
-    display: block;
-    width: 150px;
-    background-color: tomato;
-    float: left;
-}*/
-
-
-
-/*input, textarea
-{
-    width: 500px;
-    
-}*/
 
 label{
     display: inline-block;
     width: 150px;
 
 }
-.btn_valider_panier{
-    margin-top: 30px;
-    border-radius: 5px;
-    border: 1px solid;
-    font-size: large;
-    font-weight: bold;
-}
-
-.btn_valider_panier:hover
-{
-    background-color: rgb(253, 253, 152);
-}
-
-
 /******************************************/
-
 /**************CONFIRMATION COMMANDE***************/
-
 .commande_confirmation h3 
 {
     font-size: xx-large;
@@ -355,15 +405,18 @@ label{
 }
 
 
+.recap_confirmation
+{
+    text-align: center;
+}
+
 .recap_confirmation p 
 {
     font-size: x-large;
     text-align: center;
 }
-/**************************************************/
-
-  
-/****Footer****/
+/*************************************************/
+/*****************Footer*******************/
 footer
 {
     font-family: "Russo One", sans-serif;
@@ -415,8 +468,362 @@ footer
     font-size: x-large;
 }
 
+/***********************************/
+/***********MEDIA QUERIES***********/
+/***********************************/
+@media screen and (min-width: 750px) and (max-width: 1000px)
+{
+    .logo 
+    {
+        width: 80%;
+    }
 
+    .titre h1
+    {
+        font-size: xx-large;
+    }
 
+    p
+    {
+        font-size: 40px;
+        font-family: "Russo One", sans-serif;
+    }
 
-/*input:valid , textarea:valid {background-color : rgb(15, 240, 15);}
-input:invalid , textarea:invalid {background-color : rgb(190, 68, 68);}*/
+    /**********Footer***********/
+    footer
+    {
+        height: auto;
+        margin-top: 30px;
+    }
+
+    .liens_footer
+    {
+        display: block;
+        width: 100%;
+        height: inherit;
+        align-items: center;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .liens
+    {
+        display: block;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 0;
+    }
+    
+    .liens_footer h3
+    {
+        font-weight: normal;
+        margin-left: 40px;
+        font-size: x-large;
+        margin-bottom: 0;
+    }
+    
+    .liens li
+    {
+        list-style: none;
+        text-decoration: none;
+        margin-bottom: 10px; 
+        font-size: large;
+    }
+
+    /*********PAGE PRODUIT*********/
+    .section_entete_produit
+    {   
+        display: block;
+        justify-content: center;
+    }
+
+    .section_image_produit
+    {
+        text-align: center;
+    }
+
+    .section_detail_produit
+    {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .section_listes_produit 
+    {
+        display: block;
+        text-align: left;
+        width: max-content;
+        margin: auto;
+        margin-bottom: 30px;
+        padding: 10px;
+        /*background-color: beige;*/
+        border-radius: 5px;
+        border: 2px solid white;
+    }
+    /******************************/ 
+}
+
+@media only screen and (max-width: 750px)
+{
+    .logo 
+    {
+        width: 80%;
+    }
+
+    header
+    {
+        display: block;
+    }
+
+    .lien_panier , .lien_produits, .lien_produits_panier
+    {
+        display: inline-flex;
+    }
+
+    .navigation
+    {
+        display: block;
+        width: 100%;
+        margin: auto;
+        text-align: end;
+        margin-top: 20px;
+    }
+
+    .titre h1
+    {
+        font-size: xx-large;
+    }
+    
+    p
+    {
+        font-size: 40px;
+        font-family: "Russo One", sans-serif;
+    }
+    /*********PAGE PRODUIT*********/
+    .section_globale_produit
+    {
+        background-color: darkseagreen;
+        padding: 0;
+    }
+
+    .section_entete_produit
+    {   
+        display: block;
+        justify-content: center;
+    }
+    
+    .section_image_produit
+    {
+        text-align: center;
+    }
+    
+    .section_detail_produit
+    {
+        text-align: center;
+        margin-left: 0;
+    }
+    
+    .section_listes_produit 
+    {
+        display: block;
+        text-align: left;
+        width: max-content;
+        margin: auto;
+        margin-bottom: 30px;
+        padding: 10px;
+        /*background-color: beige;*/
+        border-radius: 5px;
+        border: 2px solid white;
+    }
+
+    /********PAGE PANIER************/
+    .ligne_produit_panier
+    {
+        display: block;
+    }
+
+    .produit_panier
+    {
+        margin-left: 0;
+        margin-top: 10px;        
+    }
+
+    .prix_produit_panier
+    {
+        display: block;
+        width: auto;
+        /*padding-right: 0;*/
+    }
+
+    .btn_supprimer_panier
+    {
+        margin-left: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .formulaire_contact
+    {
+        border: none;
+        border-radius: 0;
+    }
+
+    .section_formulaire_panier
+    {
+        display: block;
+    }
+
+    .div_form
+    {
+        display: grid;
+        margin-top: 10px;
+    }
+    .champ_form
+    {
+        margin-top: 0;
+    }
+    /******************************/ 
+    /************Footer************/
+    footer
+    {
+        height: auto;
+           margin-top: 30px;
+    }
+    
+    .liens_footer
+    {
+        display: block;
+        width: 100%;
+        height: inherit;
+        align-items: center;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+    
+    .liens
+    {
+        display: block;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 0;
+    }
+        
+    .liens_footer h3
+    {
+        font-weight: normal;
+        margin-left: 40px;
+        font-size: x-large;
+        margin-bottom: 0;
+    }
+        
+    .liens li
+    {
+        list-style: none;
+        text-decoration: none;
+        margin-bottom: 10px; 
+        font-size: large;
+    }
+}
+
+@media only screen and (max-width: 600px)
+{
+    .logo 
+    {
+        width: 80%;
+    }
+
+    .titre
+    {
+        margin-top: 20px;
+        width: 100%;
+        background-color: black;
+        height: auto;
+    }
+
+    p
+    {
+        font-size: 25px;
+        font-family: "Russo One", sans-serif;
+    }
+
+    .titre h1
+    {
+        font-size: 30px;
+    }
+
+    .img_produit
+    {
+        margin: 10px;
+        width: 300px;
+        height: auto;
+        object-fit: cover;
+        border: 2px solid white;
+        border-radius: 10px;
+    }
+
+    .section_listes_produit 
+    {
+        width: min-content;
+    }
+
+    section a img 
+    {
+        width: 300px;
+    }
+
+    .div_form
+    {
+        display: grid;
+        margin-top: 0;
+    }
+    
+    .champ_form
+    {
+        width: 400px;
+        margin-top: 0;
+    }
+
+    .div_form
+    {
+        display: grid;
+        margin-top: 10px;
+    }
+}   
+
+@media only screen and (max-width: 510px)
+{
+    .champ_form
+    {
+        width: 300px;
+        margin-top: 0;
+    }
+
+    .formulaire_contact
+    {
+        padding: 10px 0 0 0;            
+    }
+
+    .div_form
+    {
+        display: grid;
+        margin-top: 10px;
+    }
+
+    .btn_valider_panier
+    {
+        margin-bottom: 20px;
+    }
+
+    /*************footer**********/
+    .liens_footer h3 
+    {
+        margin-left: 10px;        
+    }
+    
+    .liens
+    {
+        padding-left: 10px;
+    }
+    /*****************************/
+}
+

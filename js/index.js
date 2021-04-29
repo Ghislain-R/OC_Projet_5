@@ -1,16 +1,31 @@
+/*Test fonction de création des éléments de la page*/
+/*function CreationElement(TypeElement, Section,NomClasse) {
+    Section = document.createElement(TypeElement);
+    Section.className = NomClasse;
+}*/
+
+/*Excection de la fonction de récupération de la liste des caméras*/
 const RecupCameras =  async function() {
-    /*récupération des données de l'API*/
+    /*Récupération des données de l'API*/
     try {
+        /*Execution de la requête GET*/
         let response = await fetch('http://localhost:3000/api/cameras');
+
+        /*Si la réponse est OK, récupération de la liste des produits*/
         if (response.ok) {
+
             let ListeCameras = await response.json();
             console.log(ListeCameras);
 
-	        /*Boucle de parcours sur la liste des éléments renvoyés par l'AP*/
+	        /*Boucle de parcours sur la liste des éléments JSON renvoyés par l'AP*/
             for (let Camera of ListeCameras) {
                 const CameraDiv = document.getElementById('liste_cameras');
-        
+
                 /*Création d'une section "Camera"*/
+                
+                /*const CameraSection = "";
+                CreationElement('section',CameraSection,'camera');*/
+
                 const CameraSection = document.createElement('section');
                 CameraDiv.appendChild(CameraSection);
                 CameraSection.className = 'camera';
@@ -53,13 +68,11 @@ const RecupCameras =  async function() {
     }
 }
 
-/*appel de la fonction RecupCameras*/
+/*Appel de la fonction RecupCameras*/
 RecupCameras();
 
 
-/*******************************************************************************************/
-/*Recherche du contenu du LocalStorage pour afficher la quantité de produits dans le panier*/
-/*******************************************************************************************/
+/*****Recherche du contenu du LocalStorage pour afficher la quantité de produits dans le panier*****/
 /*Récupération des données contenues dans localStorage*/
 let ContenuPanier = JSON.parse(localStorage.getItem('ArticlePanier'));
 console.log(ContenuPanier);
@@ -70,7 +83,6 @@ const QuantitePanier = document.getElementById('index_panier');
 const NombreArticles = document.createElement('p');
 QuantitePanier.appendChild(NombreArticles);
 
-
 /*Si le panier est vide*/
 if(ContenuPanier == null || ContenuPanier.length === 0){   
     
@@ -79,13 +91,9 @@ if(ContenuPanier == null || ContenuPanier.length === 0){
 } else {
     /*Si le panier contient des produits, parcours des élements du local storage et cumul des quantités de tous les produits*/
     let i = 0;
-    for (Produit of ContenuPanier) {
-      
+    for (Produit of ContenuPanier) {      
         i=  i + Produit.Quantite;
         NombreArticles.textContent = i;
-
     };
 } 
-/*******************************************************************************************/
-/*******************************************************************************************/
-/*******************************************************************************************/
+/***************************************************************************************************/
