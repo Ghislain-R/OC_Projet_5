@@ -1,9 +1,3 @@
-/*Test fonction de création des éléments de la page*/
-/*function CreationElement(TypeElement, Section,NomClasse) {
-    Section = document.createElement(TypeElement);
-    Section.className = NomClasse;
-}*/
-
 /*Excection de la fonction de récupération de la liste des caméras*/
 const RecupCameras =  async function() {
     /*Récupération des données de l'API*/
@@ -20,11 +14,6 @@ const RecupCameras =  async function() {
 	        /*Boucle de parcours sur la liste des éléments JSON renvoyés par l'AP*/
             for (let Camera of ListeCameras) {
                 const CameraDiv = document.getElementById('liste_cameras');
-
-                /*Création d'une section "Camera"*/
-                
-                /*const CameraSection = "";
-                CreationElement('section',CameraSection,'camera');*/
 
                 const CameraSection = document.createElement('section');
                 CameraDiv.appendChild(CameraSection);
