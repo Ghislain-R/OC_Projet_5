@@ -60,29 +60,7 @@ const RecupCameras =  async function() {
 /*Appel de la fonction RecupCameras*/
 RecupCameras();
 
+/*Appel de la fonction calculpanier (Détermination de la quantité de produits dans le panier*/
+calculpanier();
 
-/*****Recherche du contenu du LocalStorage pour afficher la quantité de produits dans le panier*****/
-/*Récupération des données contenues dans localStorage*/
-let ContenuPanier = JSON.parse(localStorage.getItem('ArticlePanier'));
-console.log(ContenuPanier);
 
-/*Création de l'élément du récapitulatif panier*/
-const QuantitePanier = document.getElementById('index_panier');
-
-const NombreArticles = document.createElement('p');
-QuantitePanier.appendChild(NombreArticles);
-
-/*Si le panier est vide*/
-if(ContenuPanier == null || ContenuPanier.length === 0){   
-    
-    NombreArticles.textContent = '0';
-    
-} else {
-    /*Si le panier contient des produits, parcours des élements du local storage et cumul des quantités de tous les produits*/
-    let i = 0;
-    for (Produit of ContenuPanier) {      
-        i=  i + Produit.Quantite;
-        NombreArticles.textContent = i;
-    };
-} 
-/***************************************************************************************************/

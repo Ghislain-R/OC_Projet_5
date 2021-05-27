@@ -4,12 +4,13 @@ const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 console.log(id);
 
+
 /*Fonction pour l'affichage du détail du produit*/
-const AfficherProduit = async function() {
+const AfficherProduit = async function(idproduit) {
     /*Récupération des informations de l'appareil photo sélectionné par son id*/
     try {
         /*Execution de la requête GET*/
-        let response = await fetch('http://localhost:3000/api/cameras/' + id);
+        let response = await fetch('http://localhost:3000/api/cameras/' + idproduit);
 
         /*Si la réponse est OK, récupération des informations du produit*/
         if (response.ok) {
@@ -83,7 +84,6 @@ const AfficherProduit = async function() {
                     BoutonPanier.textContent = "Ajouter au panier"; 
                     DescriptionProduit.textContent = Camera.description;  
 
-                    
                     /*****Récupération de la liste des options*****/
                     const Lentille = Camera.lenses;
                     /*Parcours de la liste des options  et ajout dans la liste déroulante*/
@@ -101,8 +101,8 @@ const AfficherProduit = async function() {
                         SelectQuantite.setAttribute("value", j);
                         SelectQuantite.textContent = j;
                     }
-                
-                     
+
+ 
                     /*********************AJOUT DU PRODUIT DANS LE PANIER*************************/
                     /*Au clic sur le bouton "Ajouter au panier"*/
                     BoutonPanier.addEventListener("click", function (event) {
@@ -134,18 +134,10 @@ const AfficherProduit = async function() {
 
                                         /*Envoi de la modification au LocalStorage*/
                                         localStorage.setItem('ArticlePanier',JSON.stringify(ContenuPanier1));
-                                            
+                                        
                                         /*Choix pour l'utilisateur d'afficher le panier ou de revenir à la page d'accueil*/
-                                        if (window.confirm('Le produit '+Camera.name + " " +' a bien été ajouté. Souhaitez vous consulter votre panier ?')) 
-                                        { 
-                                            window.location.href = "panier.html";
-                                            return;
-                                        } 
-                                        else 
-                                        {
-                                            window.location.href = "index.html";
-                                            return;
-                                        };
+                                        confirmation(Camera.name)
+                                        return;
 
                                     };                    
                                 };
@@ -163,6 +155,7 @@ const AfficherProduit = async function() {
                                 IdCamera: Camera._id,
                                 Quantite: parseFloat(SelecteurQuantite.value), 
                                 PrixCamera: ((parseFloat(SelecteurQuantite.value)) * Camera.price) / 100 ,
+                                UrlCamera: Camera.imageUrl
                             };
 
                             console.log(CameraAjout);
@@ -172,20 +165,11 @@ const AfficherProduit = async function() {
                                     
                             /*Ajout du produit au LocalStorage*/        
                             localStorage.setItem('ArticlePanier',JSON.stringify(ContenuPanier1));
-                                
+                             
                             /*Choix pour l'utilisateur d'afficher le panier ou de revenir à la page d'accueil*/
-                            if (window.confirm('Le produit '+Camera.name + " " +' a bien été ajouté. Souhaitez vous consulter votre panier ?')) 
-                            { 
-                                window.location.href = "panier.html";
-                                return;
-                            } 
-                            else 
-                            {
-                                window.location.href = "index.html";
-                                return;
-                            };
-
-                        }
+                            confirmation(Camera.name)
+                            return;
+                        };
                         /********************************************************************************************************************************/
 
                         /*****Si le produit sélectionné par l'utilisateur n'était pas déjà présent dans le panier, alors on l'ajoute au LocalStorage*****/
@@ -198,6 +182,7 @@ const AfficherProduit = async function() {
                                 IdCamera: Camera._id,
                                 Quantite: parseFloat(SelecteurQuantite.value), 
                                 PrixCamera: ((parseFloat(SelecteurQuantite.value)) * Camera.price) / 100 ,
+                                UrlCamera: Camera.imageUrl
                             };
 
                             console.log(AjoutProduit);
@@ -208,18 +193,10 @@ const AfficherProduit = async function() {
                             /*Ajout du produit au LocalStorage*/        
                             localStorage.setItem('ArticlePanier', JSON.stringify(ContenuPanier1));
                             console.log(ContenuPanier1);
-                                
+                            
                             /*Choix pour l'utilisateur d'afficher le panier ou de revenir à la page d'accueil*/
-                            if (window.confirm('Le produit '+Camera.name + " " +' a bien été ajouté. Souhaitez vous consulter votre panier ?')) 
-                            { 
-                                window.location.href = "panier.html";
-                                return;
-                            } 
-                            else 
-                            {
-                                window.location.href = "index.html";
-                                return;
-                            };
+                            confirmation(Camera.name)
+                            return;                          
 
                         };
                         /**********************************************************************************************************************************/
@@ -238,37 +215,7 @@ const AfficherProduit = async function() {
 };
 
 /*Appel de la fonction AfficherProduit*/
-AfficherProduit();
+AfficherProduit(id);
 
-
-/*****Recherche du contenu du LocalStorage pour afficher la quantité de produits dans le panier*****/
-/*Récupération des données contenues dans localStorage*/
-let ContenuPanier = JSON.parse(localStorage.getItem('ArticlePanier'));
-console.log(ContenuPanier);
-
-/*Création de la page du récapitulatif panier*/
-const QuantitePanier = document.getElementById('index_panier');
-
-const NombreArticles = document.createElement('p');
-QuantitePanier.appendChild(NombreArticles);
-
-
-/*Si le panier est vide, affichage de la quantité 0*/
-if(ContenuPanier == null || ContenuPanier.length === 0){   
-    
-    NombreArticles.textContent = '0';
-    
-} else {
-    /*Si le panier contient des produits, parcours des élements du local storage et affichage du nombre de produits*/
-    let i = 0;
-    for (Produit of ContenuPanier) {
-      
-        i=  i + Produit.Quantite;
-        NombreArticles.textContent = i;
-
-    };
-} 
-/***************************************************************************************************/
-
-
- 
+/*Appel de la fonction calculpanier (Détermination de la quantité de produits dans le panier*/
+calculpanier();

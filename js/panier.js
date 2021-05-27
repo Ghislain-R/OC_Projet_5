@@ -70,32 +70,11 @@ else
         LigneProduit.appendChild(BlocImage)
         BlocImage.className = ''
 
-        /**********Récupération de l'image du produit**************/
-        const AfficherProduit = async function() {
-            /*Récupération de l'image de l'appareil photo via son id*/
-            try {
-                let response = await fetch('http://localhost:3000/api/cameras/' + Produit.IdCamera);
-                if (response.ok) {
-                        let Camera = await response.json();
-                        console.log(Camera);
-        
-            let ImageProduit = document.createElement('img');
-            BlocImage.appendChild(ImageProduit);
-            ImageProduit.setAttribute('src',Camera.imageUrl);
-            ImageProduit.className =  'img_produit_panier';
-
-                }
-                else {
-                    console.error('Retour du serveur : ', response.status);
-                    alert('Erreur rencontrée : ' + response.status);
-                } 
-            } catch (error) {
-                alert("Erreur : " + error);
-            }
-        };
-        
-        /*Appel de la fonction AfficherProduit*/
-        AfficherProduit();
+        /**********Récupération de l'image du produit**************/      
+        let ImageProduit = document.createElement('img');
+        BlocImage.appendChild(ImageProduit);
+        ImageProduit.setAttribute('src',Produit.UrlCamera);
+        ImageProduit.className =  'img_produit_panier';
         /**********************************************************/
 
         const recapProduit = document.createElement('p');
@@ -124,7 +103,6 @@ else
         iconeBoutonSupprimer.className = 'fas fa-trash-alt';     
 
     };
-
 
     /***************Gestion supression totale du panier***********/
     /*Ajout d'un bouton de suppression totale du panier*/
